@@ -1,0 +1,105 @@
+Repositorio de la primeras verciones.
+Repositorio: https://github.com/Nethram/callblaster
+
+********************************
+* Instalación                  *
+********************************
+
+1-En su servidor Asterisk, copie todos los archivos y directorios a un directorio web (por ejemplo, / var / www / html / Callblaster).
+
+2-Abra config.php en un editor de texto y cambie las configuraciones de la base de datos y la ruta base al directorio instalado.
+
+Proporcione su host MySql, el nombre de la base de datos, el usuario de la base de datos y la contraseña de la base de datos. Otorgue todos los privilegios de la base de datos al usuario. Puede usar la misma base de datos para Asterisk y Callblaster, las credenciales se pueden encontrar en /etc/asterisk/freepbx.conf
+
+// Configuración de la base de datos
+// ...........................................
+$ db_host = "localhost";
+$ db_name = "callblaster";
+$ db_user = "root";
+$ db_pass = "passw0rd";
+// ..........................................
+
+Proporcione la ruta a su directorio y la ruta agi de Asterisk. Puede cambiar la ruta del archivo de sonido de bienvenida aquí.
+
+// caminos
+// ...........................................
+
+$ ruta base = "/ var / www / html / callblastergpl /";
+
+$ agipath = "/ var / lib / asterisco / agi-bin /";
+
+// Establecer archivo de audio predeterminado, se utilizará si no se especifica ningún archivo de audio en la lista de números.
+// ...........................................
+
+$ welcomeSound = $ basepath. "audio / welcome";
+
+// ...........................................
+
+3- Asegúrese de que los directorios de audio, archivos, registros y tmp sean modificables. (cambie el permiso del archivo a 777)
+
+4- Dar permisos de escritura al directorio / var / spool / asterisk.
+
+5- Crea un contexto de plan de marcado para callblaster.
+
+Si FreePbx está instalado en su servidor, puede crear un contexto de callblaster en el archivo extensions_custom.conf. Abra extensions_custom.conf ubicado en / etc / asterisk en un editor de texto y agregue las siguientes líneas al final del archivo.
+
+; contexto de callblaster
+
+[callblaster] exten
+=> 333,1, AGI (/ var / www / ..... ruta a .... / callblaster.php)
+
+cambie la ruta al script callblaster.php que está en su directorio base de instalación de callblaster. No olvide volver a cargar el asterisco, ejecute la recarga del núcleo en la consola de asterisco.
+
+6- Callblaster necesita ejecutar funciones php shell_exec y exec, asegúrese de que su instalación pueda ejecutar estas funciones.
+
+Ahora su Callblaster está listo para usar.
+
+
+********************************
+*  Cómo utilizar               *
+********************************
+
+Abra su navegador y apunte a su directorio de Call Blaster, será dirigido al Panel de administración de Call Blaster.
+
+El panel de administración de Call Blaster tiene cuatro secciones, como Configuración, Cargar y realizar llamadas, Registros de llamadas y Archivos de audio.
+
+Sección de configuración:
+
+Esta sección le ayuda a configurar el intervalo de llamadas y dos contextos y extensiones de destino.
+Durante el callblasting, su oyente tendrá las opciones 1 y 2 para IVR saliente. Aquí está configurando estos dos destinos.
+
+Ejemplo:
+considere los siguientes destinos y la ruta de salida está lista en su servidor.
+
+-IVR con código de característica 10
+-Configuración de cola con 700
+-Grupo de anillo con 600
+-Extensiones 102,102 y 103 -Destino
+personalizado de [nethram] 500 para IVR personalizado
+
+Ejemplo 1:
+estamos configurando el destino 1 para la extensión 102 y 2 para la cola 700
+
+Cambie los campos de entrada en la sección Configuración, coloque Contexto [desde-interno] para ambos y Extensión 102 para el primero y 700 para el segundo.
+
+Ejemplo 2:
+Estamos configurando el destino 1 para la Extensión 103 y 2 para IVR 10
+
+Cambie los campos de entrada en la sección Configuración, coloque Contexto [desde-interno] para ambos y Extensión 103 para el primero y 10 para el segundo.
+
+Ejemplo 3:
+estamos configurando el destino 1 para el grupo de timbres 600 y 2 para el destino personalizado [nethram] 500
+
+Cambie los campos de entrada en la sección Configuración, coloque Contexto [from-internal] para el primero y [nethram] para el segundo. Extensión 600 para el primero y 500 para el segundo.
+
+Cargar y realizar llamadas:
+
+Esta sección le permite cargar un archivo .csv con números y nombres de archivos de audio preferidos e iniciar llamadas. Verifique el archivo de muestra numbers-sample.csv y conserve el formato de archivo para sus cargas.
+
+Registros de llamadas:
+
+Desde esta sección, puede ver lo que sucedió con la explosión de su llamada y lo que eligieron sus oyentes.
+
+Archivos de sonido:
+
+Aquí puede cargar sus archivos de audio personalizados y realizar llamadas de prueba para asegurarse de que todo funcione correctamente.
