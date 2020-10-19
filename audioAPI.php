@@ -37,6 +37,21 @@ if(isset($_FILES['audioFile']))
      //echo "false"; //El archivo deve tener un nombre
     }
 }
+elseif(isset($_REQUEST['action']) && $_REQUEST['action']=="Delteaudio" )
+{
+    $audio = $_REQUEST['nameaudio'];
+    $cmd = "mv audio/$audio Delete";
+    // Mover el archivo:
+    //move_uploaded_file("audio/$audio","Delete/$audio");
+    //copy("/audio/$audio","/Delete/$audio");
+    // exec($cmd);  //  https://192.99.111.247/callblaster/audioAPI.php?nameaudio=welcome.wav&action=Delteaudio
+    //$salida = shell_exec('mv audio/'.$audio.' Delete');
+    unlink("audio/$audio");
+
+    header('Content-type: application/json; charset=utf-8');     // json_encode($datos, JSON_FORCE_OBJECT);
+    echo  '{"data":"'.$audio.'"}';
+    exit();
+}
 else{
        // echo "false"; //no existe el paramentro *audioFile
         exec("ls -t audio/",$files);

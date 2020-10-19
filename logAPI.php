@@ -18,10 +18,9 @@ ini_set('display_errors', 1);
 if(isset($_REQUEST['file']))
 {
 	$file = $_REQUEST['file'];
-	$file=substr($basepath,0,-1).$file;
+	// $file=substr($basepath,0,-1).$file;
 	header('Content-type: text/csv');
 	header("Content-disposition: attachment;filename=log.csv");
-	
 	$query = "select * from logs where csvFile='$file' and type='heading'";
 	$result = mysql_query($query);
 	$ret='';
@@ -31,7 +30,9 @@ if(isset($_REQUEST['file']))
 		$head = explode(",",$row['fields']);
 		
 		for($i=0;$i<count($head);$i++)
-		$ret.=$head[$i].",";	
+		{
+		   $ret.=$head[$i].",";
+		}	
 		$ret.="Time,Status,Option Choosen";
 	}
 	
@@ -68,7 +69,7 @@ else{
         {
             $size = filesize("files/$file")/1024;
             $filedate = date ("m/d/Y H:i:s", filemtime("files/$file"));
-            $link = "logAPI.php?file=".urlencode($basepath."/files/$file");
+            $link = "logAPI.php?file=".urlencode($basepath."files/$file");
 
             if($contador!= 0){ $jsondata.=','; }
             $jsondata.='{'; 

@@ -16,12 +16,14 @@
 $db_host="localhost";
 $db_name="asterisk";
 $db_user="root";
-$db_pass="qwweee1234";
+$db_pass="Issabel2020";
 //.............................................
 
+//Database call_center
+$db="call_center";
 
 //caller id and name
-$caller_id="<FromWarlinSBCloud>";
+$caller_id="<FromMotorCreditoCloud>";
 //..............................................
 
 
