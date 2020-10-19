@@ -164,52 +164,7 @@
 
       <!-- Info boxes -->
       <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12" id="div-config" >
-            <div class="info-box hover" title="Da click para ir a esta opccion">
-            <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
 
-            <div class="info-box-content">
-              <span class="info-box-number">Conf. De LLamadas</span>
-              <span class="info-box-text">Tiempo Para Marcar Opcion </span>
-              <span class="info-box-text">Extenciones de llamadas</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12" id="div-callAut"> 
-          <div class="info-box hover"title="Da click para ir a esta opccion">
-            <span class="info-box-icon bg-green"><i class="fa fa-phone"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-number">LLamadas Automaticas</span>
-              <span class="info-box-text">Subir lista de contactos</span>
-              <span class="info-box-text">LLamar y ver progreso</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-
-        <!-- fix for small devices only -->
-        <div class="clearfix visible-sm-block"></div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12" id="div-calLog">
-          <div class="info-box hover" title="Da click para ir a esta opccion">
-            <span class="info-box-icon bg-red"><i class="fa fa-list-ol"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-number">Historial de Llamadas</span>
-              <span class="info-box-text">Ver y filtral historial</span>
-              <span class="info-box-text">Descargar historial</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12" id="div-audio">
           <div class="info-box hover" title="Da click para ir a esta opccion">
             <span class="info-box-icon bg-yellow"><i class="fa fa-volume-up"></i></span>
@@ -225,6 +180,55 @@
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
+
+        <div class="col-md-3 col-sm-6 col-xs-12" id="div-config" >
+            <div class="info-box hover" title="Da click para ir a esta opccion">
+            <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-number">Conf. De LLamadas</span>
+              <span class="info-box-text">Tiempo Para Marcar Opcion </span>
+              <span class="info-box-text">Extenciones de llamadas</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        
+         <!-- fix for small devices only -->
+         <div class="clearfix visible-sm-block"></div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12" id="div-callAut"> 
+          <div class="info-box hover"title="Da click para ir a esta opccion">
+            <span class="info-box-icon bg-green"><i class="fa fa-phone"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-number">LLamadas Automaticas</span>
+              <span class="info-box-text">Subir lista de contactos</span>
+              <span class="info-box-text">LLamar y ver progreso</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <div class="col-md-3 col-sm-6 col-xs-12" id="div-calLog">
+          <div class="info-box hover" title="Da click para ir a esta opccion">
+            <span class="info-box-icon bg-red"><i class="fa fa-list-ol"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-number">Historial de Llamadas</span>
+              <span class="info-box-text">Ver y filtral historial</span>
+              <span class="info-box-text">Descargar historial</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
       </div>
       <!-- /.row -->
      
@@ -236,6 +240,7 @@
                   <li  class="active"><a href="#audio" id="audioClik" data-toggle="tab">Audios</a></li>
                   <li><a  href="#settings" id="settingsClik" data-toggle="tab">Configuracion</a></li>
                   <li ><a href="#activity" id="LLamadasClik" data-toggle="tab">LLamadas</a></li>
+                  <li><a href="#camp" id="" data-toggle="tab">Campañas</a></li>
                   <li><a href="#timeline" id="HistorialClik" data-toggle="tab">Historial</a></li>
                 </ul>
                 <div class="tab-content">
@@ -391,6 +396,155 @@
                           </tr>
                           </tfoot>
                         </table>           
+                  </div>
+                  <!-- /.tab-pane -->
+                  <div class="tab-pane" id="camp">
+                    <h3 class="">Campañas</h3>
+                    <br>
+                      <p>
+                        <a class="btn btn-primary btnOpenAddCamp" id="btnOpenAddCamp">
+                          <i class="fa  fa-plus-circle"></i> Agregar Campañas
+                        </a>
+                      </p>
+                      <br>
+                        <table id="tableCamp" class="table table-bordered table-striped" style="width:100%">
+                          <thead>
+                          <tr>
+                            <th>Nombre</th>
+                            <th>Rango de Fecha</th>
+                            <th>Hora</th>
+                            <th>Reintentos </th>
+                            <th>Tronco </th>
+                            <th>Cola</th>
+                            <th>Llam. completadas</th> 
+                            <th>Tiempo promedio </th> 
+                            <th>Estado </th> 
+                            <th>Accion </th>
+                          </tr>
+                          </thead>
+                          <tfoot>
+                            <tr>
+                              <th>Nombre</th>
+                              <th>Rango de Fecha</th>
+                              <th>Hora</th>
+                              <th>Reintentos </th>
+                              <th>Tronco </th>
+                              <th>Cola</th>
+                              <th>Llam. completadas</th> 
+                              <th>Tiempo promedio </th> 
+                              <th>Estado </th> 
+                              <th>Accion </th>
+                            </tr>
+                          </tfoot>
+                        </table>  
+                        
+                        <div class="modal fade" id="modal-addcamp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header ">
+                                <h3 class="modal-title" id="">Agregar Campaña</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <form  method="post" id="" enctype="multipart/form-data" > 
+                                  <div class="form-group">
+                                    <label for="" class="col-form-label">Nombre de Campaña:</label>
+                                    <div class="input-group">
+                                       <input type="text" class="form-control"  id="nameCamp" placeholder="Escribe el nombre de la campaña" >
+                                       <div class="input-group-addon">
+                                         <i class="fa fa-volume-up"></i>
+                                       </div>
+                                    </div>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="phone" class="col-form-label">Rango de Fecha:</label>
+                                  </div>
+
+                                  <div class="form-group row">
+                                    <!-- <label for="" class="col-sm-1 text-primary">Inicio</label>
+                                    <div class="col-sm-5">
+                                      <input type="date" class="form-control" id="" >
+                                    </div> -->
+                                    <div class="col-sm-6">
+                                      <label for="" class=" text-primary">Inicio</label>
+                                      <input type="date" class="form-control" id="InicioCamp" >
+                                    </div>
+                                    <div class="col-sm-6">
+                                      <label for="" class="text-primary">Fin</label>
+                                      <input type="date" class="form-control" id="FinCamp" >
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label for="phone" class="col-form-label">Horario por día:</label>
+                                  </div>
+
+                                  <div class="form-group row">
+                                    <div class="col-sm-6">
+                                      <label for="" class="text-primary">Hora de inicio</label>
+                                      <input type="time" class="form-control" id="HoraInicioCamp" >
+                                    </div>
+                                    <div class="col-sm-6">
+                                      <label for="" class="text-primary">Hora de Finalizacion</label>
+                                      <input type="time" class="form-control" id="HoraFinCamp" >
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <div class="alert alert-warning"  id="msgModalCamp" role="alert" hidden>
+                                       mensaje 
+                                    </div>
+                                  </div>
+
+                                </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" id="btnLSaveCamp"  >
+                                  Guardar <i class="fa fa-save"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /.modal -->
+
+                        <div class="modal fade" id="modal-UpUploadConct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header ">
+                                <h3 class="modal-title" id="">Agregar contactos</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <form action="" method="post" enctype="multipart/form-data" target="_blank"> 
+                                  <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Seleccione el archivo y precione guardar para subirlo:</label>
+                                    <input type="file" class="form-control" id="ContactoFile" name="ContactoFile" accept=".csv" required>
+                                    <input type="text"  id="CampIdcsv" name="CampIdcsv" hidden="true">
+                                    <span class="text-danger" id="msjValidationContactos"> Deve Seleccione un archivo</span>
+                                  </div>
+                                  <!-- <div class="form-group">
+                                    <label for="message-text" class="col-form-label">Message:</label>
+                                    <textarea class="form-control" id="message-text"></textarea>
+                                  </div> -->
+                                </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" name="btnSubircsvConctacto" id="btnSubircsvConctacto">
+                                  Guardar <i class="fa fa-save"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /.modal -->
+
                   </div>
                   <!-- /.tab-pane -->
                   <div class="active tab-pane" id="audio">

@@ -1,0 +1,37 @@
+select * from logs where csvFile='$file' and type='heading'
+select * from logs where csvFile='$file' and type='field'
+
+select * from logs where type='heading';
+select * from logs where  type='field';
+
+select * from logs where csvFile='/var/www/html/callblaster/files/1602625100PruevaBK_lid.csv' and type='field';
+select * from logs where csvFile='/var/www/html/callblaster/files/1602625100PruevaBK_lid.csv' and  type='heading';
+
+ /var/www/html/callblaster/files/1602625100PruevaBK_lid.csv
+
+
+MariaDB [asterisk]> select * from logs where csvFile='/var/www/html/callblaster/files/1602625100PruevaBK_lid.csv' and type='field';
++--------+--------------------+---------------------+---------+---------+-------+------------------------------------------------------------+
+| autoID | fields             | time                | status  | options | type  | csvFile                                                    |
++--------+--------------------+---------------------+---------+---------+-------+------------------------------------------------------------+
+|  65064 | welcome,829329694  | 2020-10-13 17:38:21 | Dialled | Nil     | field | /var/www/html/callblaster/files/1602625100PruevaBK_lid.csv |
+|  65065 | welcome,8494094554 | 2020-10-13 17:38:31 | Dialled | Nil     | field | /var/www/html/callblaster/files/1602625100PruevaBK_lid.csv |
++--------+--------------------+---------------------+---------+---------+-------+------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+MariaDB [asterisk]> select * from logs where csvFile='/var/www/html/callblaster/files/1602625100PruevaBK_lid.csv' and  type='heading';
++--------+-------------+---------------------+--------+---------+---------+------------------------------------------------------------+
+| autoID | fields      | time                | status | options | type    | csvFile                                                    |
++--------+-------------+---------------------+--------+---------+---------+------------------------------------------------------------+
+|  65063 | audio,phone | 2020-10-13 17:38:20 | upload | Nil     | heading | /var/www/html/callblaster/files/1602625100PruevaBK_lid.csv |
++--------+-------------+---------------------+--------+---------+---------+------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [asterisk]>
+;;
+
+	/var/www/html/callblaster/var/www/html/callblaster/files/1602625100PruevaBK_lid.csv
+
+        /var/www/html/callblaster/var/www/html/callblaster/files/1596407977CallblasterList.csv
+
+    select * from logs where csvFile='/var/www/html/callblaster/var/www/html/callblaster/files/1596407977CallblasterList.csv' and type='field';

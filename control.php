@@ -21,4 +21,5 @@ if(isset($_POST['action'])){
 		print_r($controls);
 	}
 }
+
 ?>

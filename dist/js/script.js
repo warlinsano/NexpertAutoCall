@@ -97,6 +97,274 @@ $(document).on("click",".btnProbarLLamada", function () {
     $("#audioFile").val("");
   });
 
+// Click abrir btnOpenAddCamp abrir modal agregar campaña
+ $(document).on("click",".btnOpenAddCamp", function () {
+  
+  $("#modal-addcamp").modal("show");
+
+  $("#nameCamp").val("");
+  $("#InicioCamp").val("");
+  $("#FinCamp").val("");
+  $("#HoraInicioCamp").val("");
+  $("#HoraFinCamp").val("");
+
+  $("#msgModalCamp").hide();
+});
+
+// Click para abrir el modal de subir contctos de campaña
+$(document).on("click",".btnSubirContacto", function () {
+
+  var id = $(this).attr('keycamp'); 
+  $("#CampIdcsv").val(id);
+
+  $("#modal-UpUploadConct").modal("show");
+  $("#msjValidationContactos").hide();             
+  $("#ContactoFile").val("");  
+});
+
+// clik en  Subir CSV Contacto de compaña 
+$(document).on("click","#btnSubircsvConctacto", function () {
+  var csvFile = $("#ContactoFile").val();
+  var key = $("#CampIdcsv").val();
+
+  if(csvFile==""){
+    $("#msjValidationContactos").show();             
+  }
+  else{
+    $("#msjValidationContactos").hide();               
+    var property = document.getElementById('ContactoFile').files[0];
+    // var key = document.getElementById('CampIdcsv').files[0];
+    
+    var form_data = new FormData();
+    form_data.append("ContactoFile",property);
+    form_data.append("idcamp",key);
+
+    $.ajax({
+      url:'InsertConct.php',
+      method:'POST',
+      data:form_data,
+      contentType:false,
+      dataType : "json",
+      cache:false,
+      processData:false,
+      beforeSend:function(){
+        cosyAlert('<strong>Subiendo!!</strong><br />Subiendo archivo..', 'success', { showTime: 1000, hideTime: 1000, vPos: 'bottom', hPos: 'right' });
+      },
+      success:function(data){
+        //  alert(data.data.mensaje);
+          if(data.data.estado="true"){
+            $("#modal-UpUploadConct").modal("hide");
+            cosyAlert('<strong>Subiendo!!</strong><br />archivo subido correcatmente...', 'success', { showTime: 1000, hideTime: 1000, vPos: 'bottom', hPos: 'right' });
+          }else{
+            cosyAlert('<strong>Error!!</strong><br/>Ha ocurrido un error intentelo de nuevo...', 'error', { showTime: 1000, hideTime: 1000, vPos: 'bottom', hPos: 'right' });            
+          }
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+          //console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          cosyAlert('<strong>Error!!</strong><br/>Ha ocurrido un error al conectar con el servidor, intentelo de nuevo...', 'error', { showTime: 1000, hideTime: 1000, vPos: 'bottom', hPos: 'right' });            
+      }
+    });           
+  }
+});
+
+// Click boton camabiar estado de la campaña
+$(document).on("click",".cambiarEstatus", function () {
+ 
+  var  key  = $(this).attr('key'); 
+  var  estado = $(this).attr('estatus'); 
+  var  Textestado =  (estado=='I'?'Activar':'Desactivar');
+  var  inverEstado =  (estado=='I'?'A':'I');
+
+  Swal.fire({
+    title: '¿Desea '+Textestado+' la campaña?',
+    text: Textestado,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si'
+  }).then((result) => {
+    if (result.isConfirmed) {
+          $.ajax({
+            type: "GET",
+            url: "campAPI.php",
+            data: {status:inverEstado, id:key, action:"CambiarEstado"},
+            dataType : "json",
+            success: function (data) {
+               // alert(data.data);
+                var oTable = $('#tableCamp').DataTable();   
+                oTable.ajax.reload();
+
+                Swal.fire(
+                  'Cambiado!',
+                  'Es estado fue cambiado con exito.',
+                  'success'
+                )            
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+            //console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            cosyAlert('<strong>Error!!</strong><br/>Ha ocurrido un error ...', 'error', { showTime: 1000, hideTime: 1000, vPos: 'bottom', hPos: 'right' });            
+            }
+        });
+    }
+  })
+
+});
+
+// Click boton eliminar Campaña
+$(document).on("click",".btnElimarComp", function () {
+ 
+  var key = $(this).attr('Key'); 
+
+  Swal.fire({
+    title: '¿Estás seguro de eliminarla?',
+    text: "¡No podrás revertir esta accion!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, eliminalo!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+          $.ajax({
+            type: "GET",
+            url: "campAPI.php",
+            data: {id:key, action:"DelteCamp"},
+            dataType : "json",
+            success: function (data) {
+              // if(data.data=="1"){
+                var oTable = $('#tableCamp').DataTable();   
+                oTable.ajax.reload();
+
+                Swal.fire(
+                  'Eliminado!',
+                  'La campaña ha sido eliminado con exicto.',
+                  'success'
+                ) 
+              // }else{
+              //   cosyAlert('<strong>Error!!</strong><br/>Ha ocurrido un error ...', 'error', { showTime: 1000, hideTime: 1000, vPos: 'bottom', hPos: 'right' });            
+              // }               
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+            //console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            cosyAlert('<strong>Error!!</strong><br/>Ha ocurrido un error ...', 'error', { showTime: 1000, hideTime: 1000, vPos: 'bottom', hPos: 'right' });            
+            }
+        });
+
+    }
+  })
+
+});
+
+// Clik en guardar Campaña modal
+$(document).on("click","#btnLSaveCamp", function () {
+
+  var name = $("#nameCamp").val().trim();
+  var inicio = $("#InicioCamp").val();
+  var fin = $("#FinCamp").val();
+  var horaInico = $("#HoraInicioCamp").val();
+  var horaFin = $("#HoraFinCamp").val();
+
+  validacion =true;
+  $("#msgModalCamp").html("");
+  $("#msgModalCamp").hide();
+
+  if(horaFin=="") {
+    $("#msgModalCamp").show();
+    $("#msgModalCamp").html("Deve selecionar la hora de finalizacion");
+    validacion =false;
+  } 
+
+  if(horaInico=="") {
+    $("#msgModalCamp").show();
+    $("#msgModalCamp").html("Deve selecionar la hora de inicio");
+    validacion =false;
+  } 
+
+  if(fin=="") {
+    $("#msgModalCamp").show();
+    $("#msgModalCamp").html("Deve selecionar la fecha de fin");
+    validacion =false;
+  } 
+  
+  if(inicio=="") {
+    $("#msgModalCamp").show();
+    $("#msgModalCamp").html("Deve selecionar la fecha de inicio");
+    validacion =false;
+  } 
+
+  if(name=="") {
+    $("#msgModalCamp").show();
+    $("#msgModalCamp").html("Deve llenar el campo nombre");
+    validacion =false;
+  } 
+  
+if(validacion){
+    $.ajax({
+      type:'POST',
+      url:'campAPI.php',
+      data:{"name": name, "inicio": inicio, "fin": fin, "horaInico": horaInico, "horaFin": horaFin, "context":'from-internal'},
+      success:function(data){
+          if(data.data==true){
+            $("#modal-addcamp").modal("hide");
+            var oTable = $('#tableCamp').DataTable();   
+            oTable.ajax.reload();
+            cosyAlert('<strong>Guardada!!</strong><br />Campaña agregada con Exito...', 'success', { showTime: 1000, hideTime: 1000, vPos: 'bottom', hPos: 'right' });
+          }else{
+            //  alert(data.errMsg);
+            $("#msgModalCamp").html(data.errMsg);
+            $("#msgModalCamp").show();
+          }
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+          //console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          cosyAlert('<strong>Error!!</strong><br/>Ha ocurrido un error al conectar con el servidor, intentelo de nuevo...', 'error', { showTime: 1000, hideTime: 1000, vPos: 'bottom', hPos: 'right' });            
+      }
+    });           
+  }
+});
+
+// Click boton eliminar audio
+$(document).on("click",".btnElimarAudio", function () {
+ 
+    var audio = $(this).attr('nombre'); 
+
+    Swal.fire({
+      title: '¿Estás seguro de eliminarlo?',
+      text: "¡No podrás revertir esta accion!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminalo!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+            $.ajax({
+              type: "GET",
+              url: "audioAPI.php",
+              data: {nameaudio:audio, action:"Delteaudio"},
+              dataType : "json",
+              success: function (data) {
+                var oTable = $('#tableAudio').DataTable();   
+                oTable.ajax.reload();
+
+                Swal.fire(
+                  'Eliminado!',
+                  'Tu archivo ha sido eliminado con exicto.',
+                  'success'
+                )                
+              },
+              error: function(xhr, ajaxOptions, thrownError) {
+              //console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+              cosyAlert('<strong>Error!!</strong><br/>Ha ocurrido un error ...', 'error', { showTime: 1000, hideTime: 1000, vPos: 'bottom', hPos: 'right' });            
+              }
+          });
+
+      }
+    })
+  
+});
+ 
 // clik en guardar  audios modal
  $(document).on("click","#btnLSaveAudioModal", function () {
       var audioFile = $("#audioFile").val();
@@ -245,7 +513,7 @@ $(document).on("click","#btnUploadcsvFile", function () {
    });
 
 // clik en  boton pausar llamada
-  $(document).on("click","#pause-btn", function () {
+$(document).on("click","#pause-btn", function () {
         chng="";
         var act= $(this).attr('estado'); 
          $.post("control.php",{action:act},function(data){
@@ -492,7 +760,69 @@ $(document).ready(function () {
             { "data": "fechaCreacion" },
             {
               "data": "link", "autoWidth": true, "class": "tabla", "render": function (data, type, row, meta) {
-                    return ' <a class="btn btn-primary btnreproducir" link="'+row["link"]+'"><li class="fa fa-play"></li> Reproducir</a> |<a class="btn btn bg-olive margin" id="" href="'+row["link"]+'"  download="'+row["nombre"]+'"><li class="fa fa-arrow-circle-down"></li> Descargar</a>| <a class="btn btn-warning btnProbarLLamada" audioName="'+row["nombre"]+'" ><li class="fa fa-phone"></li> LLamada De Prueba</a>';
+                    return ' <a class="btn btn-primary btnreproducir" link="'+row["link"]+'"><li class="fa fa-play"></li> Reproducir</a> |<a class="btn btn bg-olive margin" id="" href="'+row["link"]+'"  download="'+row["nombre"]+'"><li class="fa fa-arrow-circle-down"></li> Descargar</a>| <a class="btn btn-danger btnElimarAudio" nombre="'+row["nombre"]+'"><li class="fa fa-trash"></li> Eliminar</a>| <a class="btn btn-warning btnProbarLLamada" audioName="'+row["nombre"]+'" ><li class="fa fa-phone"></li> LLamada De Prueba</a>';
+                } 
+            }
+        ]
+    });
+    
+    $('#tableCamp').DataTable({
+        "bLengthChange": true,
+        responsive: true,
+        language: {
+            processing: "Procesando",
+            search: "Buscar:",
+            lengthMenu: "Ver _MENU_ Filas",
+            info: "_START_ - _END_ de _TOTAL_ elementos",
+            infoEmpty: "0 - 0 de 0 elementos",
+            infoFiltered: "(Filtro de _MAX_ entradas en total)",
+            infoPostFix: "",
+            loadingRecords: "Cargando datos.",
+            zeroRecords: "No se encontraron datos",
+            emptyTable: "No hay datos disponibles",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Ultimo"
+            },
+            aria: {
+                sortAscending: ": activer pour trier la colonne par ordre croissant",
+                sortDescending: ": activer pour trier la colonne par ordre décroissant"
+            }
+        },
+        "pageLength": 10,
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todas"]],
+        "ajax": {
+            "type": "Get",
+            "url": "campAPI.php?action=getLog",
+            "datatype": "JSON"
+        },
+        "columns": [
+            { "data": "name" },
+            {
+                "data": "datetime_init", "render": function (data, type, row, meta) {
+                       return  row["datetime_init"] +'<br>' + row["datetime_end"] ;                    
+                    }
+            },
+            {
+                "data": "daytime_init", "render": function (data, type, row, meta) {
+                       return  row["daytime_init"] +'<br>' + row["daytime_end"] ;                    
+                    }
+            },
+            { "data": "retries" },
+            { "data": "trunk" },
+            { "data": "queue" },
+            { "data": "num_completadas" },
+            { "data": "promedio" },
+            {
+              "data": "estatus", "render": function (data, type, row, meta) {
+                     return  row["estatus"] =='A'?'<span estatus="'+row["estatus"]+'"  key="'+row["id"]+'" class="label label-success cambiarEstatus">Activo</span>':'<span estatus="'+row["estatus"]+'" key="'+row["id"]+'"  class="label label-danger cambiarEstatus">Inactivo</span>';                    
+                  }
+            },
+            {
+              "data": "estatus", "autoWidth": true, "class": "tabla", "render": function (data, type, row, meta) {
+                    return ' <a class="btn btn-primary btnSubirContacto" keyCamp="'+row["id"]+'"><li class="fa  fa-arrow-circle-up"></li> Subir</a> |<a class="btn btn bg-olive margin" id="" href="InsertConct.php?id='+row["id"]+'"  ><li class="fa fa-arrow-circle-down"></li> Descargar</a>| <a class="btn btn-danger btnElimarComp" Key="'+row["id"]+'"><li class="fa fa-trash"></li> Eliminar</a>';
                 } 
             }
         ]

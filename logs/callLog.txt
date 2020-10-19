@@ -2517,3 +2517,6 @@ Tue, 01 Sep 2020 22:26:24 -0400 -- User pressed 2 -- Number:8492516616  -- Audio
 Tue, 01 Sep 2020 22:28:55 -0400 -- Call in progress -- Number:8293290694  -- Audio:/var/www/html/callblaster/audio/Motorcredito
 Tue, 01 Sep 2020 22:29:32 -0400 -- Call in progress -- Number:8293290694  -- Audio:/var/www/html/callblaster/audio/welcome
 Tue, 01 Sep 2020 22:29:46 -0400 -- User pressed  -- Number:8293290694  -- Audio:/var/www/html/callblaster/audio/welcome
+2020-09-07T21:14:23-04:00 -- Call file to 18492516616 created -- CSV file: /var/www/html/callblaster/files/1599527663Nexpert.csv
+2020-10-13T17:38:21-04:00 -- Call file to 1829329694 created -- CSV file: /var/www/html/callblaster/files/1602625100PruevaBK_lid.csv
+2020-10-13T17:38:31-04:00 -- Call file to 18494094554 created -- CSV file: /var/www/html/callblaster/files/1602625100PruevaBK_lid.csv
