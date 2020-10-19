@@ -16,7 +16,7 @@
 $db_host="localhost";
 $db_name="asterisk";
 $db_user="root";
-$db_pass="Issabel2020";
+$db_pass="password";
 //.............................................
 
 //Database call_center
